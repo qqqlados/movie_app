@@ -1,6 +1,4 @@
 import { Select } from '@/components/ui/select'
-import { url } from '@/constants'
-import { IMovie, IMoviesSearchResponse } from '@/lib/types/movie'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 

@@ -5,6 +5,8 @@ import { LanguageSelect } from '../Filter/Languages'
 import { PageSelect } from '../Filter/Pages'
 import { ReleaseDatesSelect } from '../Filter/Release_Dates'
 import { IMoviesSearchResponse } from '@/lib/types/movie'
+import AdultSwitchToggle from '../Filter/Adult'
+import React, { useState } from 'react'
 
 type Props = {
 	moviesDto: IMoviesSearchResponse
@@ -42,13 +44,19 @@ export function Filters({ moviesDto }: Props) {
 			router.push(`/search?query=${query}&include_adult=${String(adult)}&language=${language}&release_year=${selectedYear}&page=${page}`)
 	}
 
+	const handleToggleAdult = (value: boolean) => {
+		router.push(`/search?query=${query}&include_adult=${String(value)}&language=${language}&release_year=${releaseYear}&page=${page}`)
+	}
+
 	return (
-		<div className='flex gap-5'>
-			<LanguageSelect query={query} onSelectLanguage={handleSelectLanguage} />
+		<div className='grid grid-cols-2 gap-3 w-100'>
+			<LanguageSelect onSelectLanguage={handleSelectLanguage} />
 
 			<PageSelect pagesCount={moviesDto.total_pages} onSelectPage={handleSelectPage} />
 
 			<ReleaseDatesSelect movies={moviesDto.results} onSelectYear={handleSelectYear} />
+
+			<AdultSwitchToggle onToggle={handleToggleAdult} />
 		</div>
 	)
 }

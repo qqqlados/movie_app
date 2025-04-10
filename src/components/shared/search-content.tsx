@@ -1,4 +1,3 @@
-import { url } from '@/constants'
 import { IMovie } from '@/lib/types/movie'
 import MovieCard from './movie-card'
 import Link from 'next/link'
