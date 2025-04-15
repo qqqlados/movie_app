@@ -3,8 +3,9 @@ import { Filters } from '@/components/ui/filters'
 import { Suspense } from 'react'
 import Form from 'next/form'
 import { url } from '@/constants'
-import { IMovie, IMoviesSearchResponse } from '@/lib/types/movie'
+import { IMoviesSearchResponse } from '@/lib/types/movie'
 import { Popover } from '@/components/ui/popover'
+import { Input } from '@/components/ui/input'
 
 export default async function SearchPage({
 	searchParams,
@@ -34,12 +35,7 @@ export default async function SearchPage({
 			<div className='flex gap-5 justify-center w-full'>
 				<div className='max-w-[600px] w-full ml-auto'>
 					<Form action={`/search`} className='flex items-center gap-5 w-full'>
-						<input
-							className='w-[500px] h-[40px] text-black outline outline-blue-400 outline-1 p-2 focus:outline-blue-600 focus:outline-3 transition transition-all transition-linear duration-500 rounded-xl'
-							name='query'
-							type='text'
-							placeholder={params?.query}
-						/>
+						<Input name='query' type='text' placeholder={params?.query || 'Enter the movie name'} />
 
 						<input type='hidden' name='include_adult' value='false' />
 						<input type='hidden' name='language' value='en-US' />

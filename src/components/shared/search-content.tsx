@@ -8,9 +8,9 @@ export function SearchContent({ movies }: { movies: IMovie[] }) {
 			{movies?.length > 0 &&
 				movies?.map(movie => (
 					<li key={movie.id}>
-						<Link href={`/movie/${movie.id}-${movie.title}`}>
-							<MovieCard movie={movie} />
-						</Link>
+						{/* <Link href={`/movie/${movie.id}-${movie.title}`}> */}
+						<MovieCard movie={movie} />
+						{/* </Link> */}
 					</li>
 				))}
 		</ul>

@@ -3,25 +3,34 @@ import { Language } from '@/lib/types/filters'
 import { useSearchParams } from 'next/navigation'
 import { Select } from '@/components/ui/select'
 import useSWR from 'swr'
-import { fetchLanguages } from '@/actions'
-import { useEffect, useState } from 'react'
 
 type Props = {
 	onSelectLanguage: (e: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-export function LanguageSelect({ onSelectLanguage }: Props) {
-	// const { data: languages = [], error, isLoading } = useSWR('/languages', fetchLanguages)
-	const [languages, setLanguages] = useState<Language[]>([])
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+export const fetchLanguages = async () => {
+	try {
+		const response = await fetch(`${url.API_BASEURL}/configuration/languages`, {
+			headers: {
+				accept: 'application/json',
+				Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+			},
+			cache: 'force-cache',
+		})
+		if (!response.ok) throw new Error('Failed to fetch languages')
 
-	useEffect(() => {
-		setIsLoading(true)
-		fetchLanguages()
-			.then(setLanguages)
-			.catch(console.error)
-			.finally(() => setIsLoading(false))
-	}, [])
+		const data: Language[] = await response.json()
+
+		return data
+	} catch (err) {
+		console.log(err)
+
+		return []
+	}
+}
+
+export function LanguageSelect({ onSelectLanguage }: Props) {
+	const { data: languages = [], error, isLoading } = useSWR('/languages', fetchLanguages)
 
 	const searchParams = useSearchParams()
 
